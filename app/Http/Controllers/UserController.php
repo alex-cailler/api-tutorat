@@ -11,6 +11,7 @@ use App\Http\Requests\User\UpdateRequest;
 use App\Http\Resources\UserResource;
 use App\Models\User;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
+use Illuminate\Support\Facades\Auth;
 
 /**
  * @group users
@@ -113,5 +114,17 @@ class UserController extends Controller
         $user->delete();
 
         return new Response(null, 204);
+    }
+
+    /**
+     * Get the current user.
+     *
+     * @authenticated
+     */
+    public function me()
+    {
+        $user = Auth::guard('api')->user();
+
+        return new UserResource($user);
     }
 }

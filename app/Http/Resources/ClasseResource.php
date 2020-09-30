@@ -15,10 +15,18 @@ class ClasseResource extends JsonResource
     {
         return [
             'id' => $this->id,
-            'matter_id' => new MatterResource(Matter::find($this->matter_id)),
+            'matter' => new MatterResource(Matter::find($this->matter_id)),
             'status' => $this->status,
-            'teacher_id' => new UserResource(User::find($this->teacher_id)),
-            'participants' => ClasseParticipantRessource::collection($this->classeParticipants()->get())
+            'teacher' => new UserResource(User::find($this->teacher_id)),
+            'participants' => $this->when(property_exists($this, 'classe_participants'), function () {
+                return ClasseParticipantRessource::collection($this->classeParticipants()->get());
+            }),
+            'created_at' => $this->created_at,
+            'address' => $this->address,
+            'date' => $this->date,
+            'room_nbr' => $this->room_nbr,
+            'place_available_nbr' => $this->place_available_nbr,
+            'level' => $this->level,
         ];
     }
 }

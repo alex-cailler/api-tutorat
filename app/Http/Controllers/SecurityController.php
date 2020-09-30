@@ -16,10 +16,13 @@ class SecurityController extends Controller
 {
     public function register( RegisterRequest $request)
     {
-        $request[ 'password' ] = bcrypt( $request->password );
-        $request['email'] = strtolower($request['email']);
 
-        $user        =  User::create( $request->validated() );
+        $credantials = $request->validated();
+
+        $credantials[ 'password' ] = bcrypt( $request->password );
+        $credantials[ 'email' ] = strtolower( $request['email'] );
+
+        $user        =  User::create( $credantials );
         $accessToken =  $user->createToken( 'authToken' )->accessToken;
 
         return response([
@@ -47,14 +50,6 @@ class SecurityController extends Controller
         ]);
     }
 
-    public function me()
-    {
-        $user = Auth::user();
-        return response()->json([
-            'success' => $user
-        ], $this->successStatus);
-    }
-
     public function login( Request $request )
     {
         $credentials = $request->only('email', 'password');
@@ -71,6 +66,9 @@ class SecurityController extends Controller
         return response([
             'message' => 'Invalid credentials'
         ], 422);
+    }
+
+    public function logout( Request $request ) {
     }
 
     public function updatePassword( Request $request ) {
@@ -90,6 +88,5 @@ class SecurityController extends Controller
         return response()
             ->json();
     }
-
 
 }

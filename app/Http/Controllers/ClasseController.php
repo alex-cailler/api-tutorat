@@ -18,6 +18,19 @@ class ClasseController extends Controller
     }
 
     /**
+     * List all classes.
+     *
+     * @authenticated
+     * @return \Illuminate\Http\Resources\Json\AnonymousResourceCollection
+     */
+    public function index()
+    {
+        $classes = Classe::all();
+
+        return ClasseResource::collection($classes);
+    }
+
+    /**
      * Create a new classe.
      *
      * @authenticated

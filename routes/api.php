@@ -20,8 +20,10 @@ use Illuminate\Support\Facades\Route;
 
 Route::post('/login', [SecurityController::class, 'login']);
 Route::post('/register', [SecurityController::class, 'register']);
-Route::post('/password/reset', [SecurityController::class, 'resetPassword']);
-Route::post('/me', [UserController::class, 'me']);
+Route::post('/password/update', [SecurityController::class, 'updatePassword'])->middleware('auth:api');
+Route::get('/me', [UserController::class, 'me'])->middleware(['auth:api']);
+Route::post('/logout', [SecurityController::class, 'logout'])->middleware(['auth:api']);
+
 
 Route::apiResources([
     'user' => UserController::class,

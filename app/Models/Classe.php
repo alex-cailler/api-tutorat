@@ -22,7 +22,10 @@ class Classe extends Model
         'teacher_id',
         'address',
         'date',
-        'salle',
+        'room_nbr',
+        'place_available_nbr',
+        'level',
+        'created_at',
     ];
 
     public function users()
@@ -34,4 +37,10 @@ class Classe extends Model
     {
         return $this->hasMany(ClasseParticipant::class);
     }
+
+    public function classeParticipant()
+    {
+        return $this->belongsTo(ClasseParticipant::class);
+    }
+
 }

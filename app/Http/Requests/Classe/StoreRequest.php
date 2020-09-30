@@ -26,8 +26,12 @@ class StoreRequest extends FormRequest
     public function rules()
     {
         return [
-            'matter_id' => 'required',
-            'teacher_id' => 'required'
+            'date'                  => 'required',
+            'room_nbr'              => 'required',
+            'address'               => 'required',
+            'place_available_nbr'   => 'required',
+            'matter_id'             => 'required',
+            'teacher_id'            => 'required',
         ];
     }
 }
